@@ -32,6 +32,7 @@
       <change beforePath="$PROJECT_DIR$/apps/client/src/vite-env.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/tsconfig.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/vite.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/tsconfig/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/tsconfig/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
@@ -109,7 +110,7 @@
       <workItem from="1674703138717" duration="6806000" />
       <workItem from="1674732620084" duration="5786000" />
       <workItem from="1674745688629" duration="725000" />
-      <workItem from="1674813664031" duration="1524000" />
+      <workItem from="1674813664031" duration="1797000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add note list view">
       <created>1674547507425</created>
