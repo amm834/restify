@@ -11,9 +11,10 @@ export const validate = (schema: AnyZodObject) => async (req: Request, res: Resp
         });
         next()
     } catch (error) {
-        if (error instanceof ZodError) {
-            const message = error.issues.map(issue => issue.message)[0];
-            next(createHttpError(createHttpError.UnprocessableEntity(message)));
-        }
+        // if (error instanceof ZodError) {
+        //     const message = error.issues.map(issue => issue.message)[0];
+        //     next(createHttpError(createHttpError.UnprocessableEntity(message)));
+        // }
+        return res.status(422).json(error);
     }
 }

@@ -5,6 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="doc: add tech stack">
+      <change afterPath="$PROJECT_DIR$/apps/backend/config/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/utils/connectToMongoDatabase.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/middlewares/jwt.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/middlewares/jwt.middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/middlewares/validate.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/middlewares/validate.middleware.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/.env" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/index.html" beforeDir="false" />
@@ -25,6 +32,8 @@
       <change beforePath="$PROJECT_DIR$/apps/client/src/vite-env.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/tsconfig.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/client/vite.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/tsconfig/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/tsconfig/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +47,11 @@
         <option value="TypeScript File" />
       </list>
     </option>
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -74,6 +88,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/backend/src/utils" />
+      <recent name="$PROJECT_DIR$/apps/backend/src" />
       <recent name="$PROJECT_DIR$/packages/tsconfig" />
     </key>
   </component>
@@ -93,7 +109,7 @@
       <workItem from="1674703138717" duration="6806000" />
       <workItem from="1674732620084" duration="5786000" />
       <workItem from="1674745688629" duration="725000" />
-      <workItem from="1674813664031" duration="228000" />
+      <workItem from="1674813664031" duration="1524000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add note list view">
       <created>1674547507425</created>
