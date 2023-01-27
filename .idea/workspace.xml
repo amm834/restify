@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="doc: add tech stack">
+      <change beforePath="$PROJECT_DIR$/apps/client/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/pnpm-lock.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/public/vite.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/api/note.api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/components/form/create.form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/components/navbar/Navbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/features/note.slice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/features/user.slice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/main.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/services/axios.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/services/storage.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/store/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/src/vite-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/client/vite.config.ts" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/apps/backend/package.json" />
+  </component>
+  <component name="ProjectId" id="2KhtivC1LucEJupyubQ3FG8Qzlg" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/amm834/workspace/turbo-rest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/amm834/workspace/turbo-rest/apps/backend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/packages/tsconfig" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="" />
+      <created>1674438776293</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674438776293</updated>
+      <workItem from="1674438778895" duration="2997000" />
+      <workItem from="1674496319955" duration="668000" />
+      <workItem from="1674505363722" duration="9499000" />
+      <workItem from="1674534439038" duration="11610000" />
+      <workItem from="1674601035193" duration="1981000" />
+      <workItem from="1674703138717" duration="6806000" />
+      <workItem from="1674732620084" duration="5786000" />
+      <workItem from="1674745688629" duration="725000" />
+      <workItem from="1674813664031" duration="228000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: add note list view">
+      <created>1674547507425</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1674547507425</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: add rtk for state management">
+      <created>1674547797964</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1674547797964</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add register functionality">
+      <created>1674710683794</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1674710683794</updated>
+    </task>
+    <task id="LOCAL-00004" summary="refactor: arrange code in navbar">
+      <created>1674710873610</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1674710873610</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: handle loggin state for note creating process">
+      <created>1674711256283</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1674711256283</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: get all notes">
+      <created>1674742933062</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1674742933062</updated>
+    </task>
+    <task id="LOCAL-00007" summary="doc: add doc">
+      <created>1674743152413</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1674743152413</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: add tsconfig package">
+      <created>1674745514156</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1674745514156</updated>
+    </task>
+    <task id="LOCAL-00009" summary="chore: remove nodemon and concurrently">
+      <created>1674746016076</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1674746016076</updated>
+    </task>
+    <task id="LOCAL-00010" summary="doc: add tech stack">
+      <created>1674746193397</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1674746193398</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="feat: add note list view" />
+    <MESSAGE value="feat: add rtk for state management" />
+    <MESSAGE value="feat: add register functionality" />
+    <MESSAGE value="refactor: arrange code in navbar" />
+    <MESSAGE value="feat: handle loggin state for note creating process" />
+    <MESSAGE value="feat: get all notes" />
+    <MESSAGE value="doc: add doc" />
+    <MESSAGE value="feat: add tsconfig package" />
+    <MESSAGE value="chore: remove nodemon and concurrently" />
+    <MESSAGE value="doc: add tech stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="doc: add tech stack" />
+  </component>
+</project>
