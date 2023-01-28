@@ -1,4 +1,4 @@
-import {object, string} from "zod";
+import {z, object, string, TypeOf} from "zod";
 
 export const createUserSchema = object({
     body: object({
@@ -22,4 +22,6 @@ export const createUserSchema = object({
         message: "Password does not match",
         path: ["confirmPassword"],
     }),
-})
+});
+
+export type CreateUserSchema = z.infer<typeof createUserSchema>;

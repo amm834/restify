@@ -4,23 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="refactor: validate middleware">
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/services/user.service.ts" afterDir="false" />
+    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="refactor: move find user by email to services">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/config/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/controllers/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/note.controller.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/middlewares/jwt.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/middlewares/jwt.middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/models/note.model.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/models/user.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/routes/auth.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/routes/user.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/routes/notes.routes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/schemas/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/schemas/note.schema.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/controllers/user.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/backend/src/schemas/user.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/schemas/user.schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/utils/connectToMongoDatabase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/utils/connect.util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/tsconfig/base.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/tsconfig/base.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,25 +45,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/amm834/workspace/turbo-rest&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/amm834/workspace/turbo-rest/apps/backend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/amm834/workspace/turbo-rest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/amm834/workspace/turbo-rest/apps/backend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/backend/src" />
@@ -98,7 +89,8 @@
       <workItem from="1674745688629" duration="725000" />
       <workItem from="1674813664031" duration="2639000" />
       <workItem from="1674819005862" duration="1189000" />
-      <workItem from="1674878703715" duration="2799000" />
+      <workItem from="1674878703715" duration="4743000" />
+      <workItem from="1674885937191" duration="129000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add note list view">
       <created>1674547507425</created>
@@ -177,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674815483031</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="refactor: move find user by email to services">
+      <created>1674883622805</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1674883622805</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +208,7 @@
     <MESSAGE value="chore: remove nodemon and concurrently" />
     <MESSAGE value="doc: add tech stack" />
     <MESSAGE value="refactor: validate middleware" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: validate middleware" />
+    <MESSAGE value="refactor: move find user by email to services" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: move find user by email to services" />
   </component>
 </project>
