@@ -5,6 +5,13 @@ import {comparePassword} from "../utils/bcrypt.util";
 import consola from "consola";
 
 export const createUser = async (user: DocumentDefinition<Omit<IUser, "createdAt" | "updatedAt">>) => {
+
+    const result = await findUserByEmail(user.email);
+
+    if (result) {
+        throw createHttpError(409, "User already exists");
+    }
+
     return await User.create(user);
 }
 

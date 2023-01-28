@@ -10,7 +10,8 @@ export const connectToMongoDatabase = async () => {
 
         consola.info("Connected to MongoDB");
     } catch (error) {
-        console.error(error)
+        consola.error("Failed to connect to MongoDB");
+        consola.error(error)
         process.exit(1);
     }
 }

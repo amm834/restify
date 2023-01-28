@@ -11,7 +11,7 @@ try {
     app.listen(port, () => {
         consola.info(`Server is running at http://localhost:${port}`);
     });
-} catch (err) {
+} catch (err: any) {
     consola.error(err.message);
     process.exit(1);
 }

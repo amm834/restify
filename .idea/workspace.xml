@@ -4,21 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="refactor: middleware register stack">
-      <change afterPath="$PROJECT_DIR$/apps/backend/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/dist/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/dist/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/controllers/session.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/models/session.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/services/jwt.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/services/session.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/src/utils/jwt.util.ts" afterDir="false" />
+    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="feat: add session create">
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/routes/session.routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/schemas/session.schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/config/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/models/user.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/models/user.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/session.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/controllers/session.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/controllers/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/routes/user.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/routes/user.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/schemas/user.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/schemas/user.schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/backend/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/services/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/utils/connect.util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/utils/connect.util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.General",
     "ts.external.directory.path": "/home/amm834/workspace/turbo-rest/apps/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -97,7 +97,7 @@
       <workItem from="1674819005862" duration="1189000" />
       <workItem from="1674878703715" duration="4743000" />
       <workItem from="1674885937191" duration="3844000" />
-      <workItem from="1674910574462" duration="5135000" />
+      <workItem from="1674910574462" duration="8200000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add note list view">
       <created>1674547507425</created>
@@ -197,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674888419622</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: add session create">
+      <created>1674916105744</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1674916105745</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +239,7 @@
     <MESSAGE value="refactor: move find user by email to services" />
     <MESSAGE value="refactor: request type in user register" />
     <MESSAGE value="refactor: middleware register stack" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: middleware register stack" />
+    <MESSAGE value="feat: add session create" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add session create" />
   </component>
 </project>

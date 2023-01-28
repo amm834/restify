@@ -1,5 +1,5 @@
 // src/index.ts
-import consola2 from "consola";
+import consola3 from "consola";
 
 // src/app.ts
 import express from "express";
@@ -23,99 +23,63 @@ var comparePassword = async (password, hash) => {
 };
 
 // src/models/user.model.ts
-var userModelSchema = new Schema({
+var userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, email: true },
   password: { type: String, required: true, minlength: 6, select: false }
 }, {
   timestamps: true
 });
-userModelSchema.pre("save", async function(next) {
-  const user = this;
-  if (!user.isModified("password"))
+userSchema.pre("save", async function(next) {
+  const user2 = this;
+  if (!user2.isModified("password"))
     return next();
   try {
-    user.password = await hashPassword(user.password);
+    user2.password = await hashPassword(user2.password);
     return next();
   } catch (error) {
     return next(error);
   }
 });
-userModelSchema.methods.comparePassword = async function(password) {
-  const user = this;
-  return await comparePassword(password, user.password);
-};
-var User = model("User", userModelSchema);
-
-// src/controllers/user.controller.ts
-import createHttpError from "http-errors";
-import jwt from "jsonwebtoken";
+var User = model("User", userSchema);
+var user = User.find({ email: "amm@gmail.com" });
 
 // src/services/user.service.ts
-var createUser = async (user) => {
-  return await User.create(user);
+import createHttpError from "http-errors";
+import consola from "consola";
+var createUser = async (user2) => {
+  const result = await findUserByEmail(user2.email);
+  if (result) {
+    throw createHttpError(409, "User already exists");
+  }
+  return await User.create(user2);
 };
 var findUserByEmail = async (email) => {
-  return await User.findOne({ email });
+  return User.findOne({ email });
 };
-
-// src/config/index.ts
-var config = {
-  port: 8e3,
-  mongoUrl: "mongodb://localhost:27017/turbo-rest-api",
-  jwtSecret: "secret",
-  jwtExpiration: "1d",
-  saltRounds: 10
+var validatePassword = async (email, password) => {
+  const user2 = await findUserByEmail(email);
+  if (!user2) {
+    throw createHttpError(401, "Invalid credentials");
+  }
+  const isMatch = await comparePassword(password, user2.password);
+  if (!isMatch) {
+    consola.error("Password is not a match");
+    throw createHttpError(401, "Invalid credentials");
+  }
+  return user2;
 };
 
 // src/controllers/user.controller.ts
+import lodash from "lodash";
 var register = async (req, res, next) => {
   try {
-    const user = await createUser(req.body);
-    await res.status(201).json(user);
+    const user2 = await createUser(req.body);
+    await res.status(201).json(lodash.omit(user2.toJSON(), "password"));
   } catch (error) {
     next(error);
   }
 };
-var login = async (req, res, next) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-      return next(createHttpError(401, "Invalid credentials"));
-    }
-    const isMatch = await comparePassword(password, user.password);
-    if (!isMatch) {
-      return next(createHttpError(401, "Invalid credentials"));
-    }
-    const access_token = jwt.sign(
-      {
-        name: user.name,
-        email: user.email
-      },
-      config.jwtSecret,
-      { expiresIn: config.jwtExpiration }
-    );
-    return await res.status(200).json({
-      msg: "Login Success",
-      access_token
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-var me = async (req, res, next) => {
-  const { email } = req.body;
-  try {
-    const user = await findUserByEmail(email);
-    await res.status(200).json(user);
-  } catch (error) {
-    next(error);
-  }
-};
-
-// src/routes/user.routes.ts
-import passport from "passport";
 
 // src/middlewares/validate.middleware.ts
 var validate = (schema) => async (req, res, next) => {
@@ -146,34 +110,113 @@ var createUserSchema = object({
     }).min(6, {
       message: "Password must be at least 6 characters"
     }),
-    confirmPassword: string({
+    passwordConfirmation: string({
       required_error: "Confirm password is required"
     }).min(6, {
       message: "Confirm password must be at least 6 characters"
     })
-  }).refine((data) => data.password === data.confirmPassword, {
+  }).refine((data) => data.password === data.passwordConfirmation, {
     message: "Password does not match",
-    path: ["confirmPassword"]
+    path: ["passwordConfirmation"]
   })
 });
 
 // src/routes/user.routes.ts
 var userRouter = Router();
-userRouter.post("/register", validate(createUserSchema), register).post("/login", login).get("/me", passport.authenticate("jwt", { session: false }), me);
+userRouter.post("/register", validate(createUserSchema), register);
 
 // src/app.ts
-import passport2 from "passport";
+import passport from "passport";
 
 // src/middlewares/jwt.middleware.ts
 import { ExtractJwt, Strategy } from "passport-jwt";
+
+// src/config/index.ts
+var config = {
+  port: 8e3,
+  mongoUrl: "mongodb://localhost:27017/turbo-rest-api",
+  saltRounds: 10,
+  jwtExpiration: "1d",
+  jwtSecret: "secret",
+  accessTokenTimeToLive: "15m",
+  refreshTokenTimeToLive: "7d",
+  publicKey: `-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsvOiUE9bh1cdKw7o3sbD
+g3Q/LuUxi/ONMMZJARwcG9xUKtx1Q+ld0oXJ+UXcMy1r2xU+D2UIT9r8Mt84fUjO
+CxLx3DzkD6p+jyh/3VORGlqF4xK5D/jpePKrZHi+a2eBxyLD9zx5J8BhT1Mtwpm8
+bzQvRHJI3ecf53RwjpowfBRMcHn5XeHZOhVoTmEWmFK8AoRH4EP5dBXGsjHnO++6
+IrmIDeaL4xJk4XGIn13ee1yX9JXtifPTgDyOKk5fXnr/UOZg2g71RFkiIQRiQ4Np
+xK3SKPPL4goYB6hoE2DlsZ7TNu0ZoThnUS4dwuG60nyEpbif+xQyGP+yQKIT9DSk
+bAy49lCwCEiMcC+pw9TtXy3u3xUtQ6+HCglf79wusXmUpBEjuQbxv84cVdza7p3B
+FL+Gjo2SSBu7oMI9NUn5SLGQD/duuALCQTYwrG14/HMLYC7/mi1w/GerzPuN+Y8Q
+BDmLAJRMpD9QC3q+frzY5BkiFCGGKsLa6mCUx5NXlKpUUQsyiV7S22txuyy25/63
+AmvcPaE+U9Xt3Ot7Ot4viAVTqb3UUsH9Ts+Anb6UCZd5A4eMEJGxFgxONxgtQRvy
+j2j5+MdgWHGVc1gJ1fejv7GYVO9HL7SGkflDUd7fHIa3tRpwX2beuSQyLl2BJySc
+fdw5MQDnE7Z77RUBnRhUsHMCAwEAAQ==
+-----END PUBLIC KEY-----`,
+  privateKey: `-----BEGIN RSA PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----
+`
+};
+
+// src/middlewares/jwt.middleware.ts
 var opts = {
   secretOrKey: config.jwtSecret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 };
 var jwtStrategy = new Strategy(opts, async function(payload, done) {
   try {
-    const user = await findUserByEmail(payload.email);
-    done(null, user);
+    const user2 = await findUserByEmail(payload.email);
+    done(null, user2);
   } catch (error) {
     done(error, false);
   }
@@ -181,35 +224,109 @@ var jwtStrategy = new Strategy(opts, async function(payload, done) {
 
 // src/app.ts
 import cors from "cors";
-import createHttpError2, { HttpError } from "http-errors";
+import createHttpError2, { isHttpError } from "http-errors";
+
+// src/routes/session.routes.ts
+import { Router as Router2 } from "express";
+
+// src/schemas/session.schema.ts
+import { object as object2, string as string2 } from "zod";
+var sessionSchema = object2({
+  email: string2({
+    required_error: "Email is required"
+  }).email("Invalid email address"),
+  password: string2({
+    required_error: "Password is required"
+  })
+});
+
+// src/models/session.model.ts
+import { model as model2, Schema as Schema2 } from "mongoose";
+var sessionModelSchema = new Schema2({
+  user: {
+    type: Schema2.Types.ObjectId,
+    ref: "User"
+  },
+  isValid: {
+    type: Boolean,
+    default: true
+  },
+  userAgent: {
+    type: String
+  }
+}, {
+  timestamps: true
+});
+var Session = model2("Session", sessionModelSchema);
+
+// src/services/session.service.ts
+var createSession = async (userId, userAgent) => {
+  return await Session.create({
+    user: userId,
+    userAgent
+  });
+};
+
+// src/utils/jwt.util.ts
+import jwt from "jsonwebtoken";
+var publicKey = config.publicKey;
+var privateKey = config.privateKey;
+var signJwt = (payload, options) => {
+  return jwt.sign(payload, privateKey, {
+    algorithm: "RS256",
+    ...options && options
+  });
+};
+
+// src/controllers/session.controller.ts
+var createUserSession = async (req, res, next) => {
+  try {
+    const { userId, email, password } = req.body;
+    const user2 = await validatePassword(email, password);
+    const session = await createSession(userId, req.get("user-agent") ?? "");
+    const { accessTokenTimeToLive, refreshTokenTimeToLive } = config;
+    const accessToken = signJwt({ ...user2, session: session._id }, { expiresIn: accessTokenTimeToLive });
+    const refreshToken = signJwt({ user: user2, session }, { expiresIn: refreshTokenTimeToLive });
+    await res.status(201).json({ accessToken, refreshToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// src/routes/session.routes.ts
+var sessionRouter = Router2();
+sessionRouter.post("/", validate(sessionSchema), createUserSession);
+
+// src/app.ts
 var app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
-passport2.use(jwtStrategy);
+passport.use(jwtStrategy);
 app.use("/api/users", userRouter);
+app.use("/api/sessions", sessionRouter);
 app.use((req, res, next) => {
   next(createHttpError2(404, "Not found"));
 });
 app.use((error, req, res, next) => {
-  if (error instanceof HttpError) {
-    return res.status(error.status).json({ msg: error.message });
-  }
-  return res.status(500).json({ msg: "Something went wrong", error });
+  const status = isHttpError(error) ? error.status : 500;
+  const errorResponse = isHttpError(error) ? { msg: error.message } : { msg: "Internal server error" };
+  res.status(status).json(errorResponse);
 });
 var app_default = app;
 
 // src/utils/connect.util.ts
 import mongoose from "mongoose";
-import consola from "consola";
+import consola2 from "consola";
 var connectToMongoDatabase = async () => {
   try {
     mongoose.set("strictQuery", true);
     await mongoose.connect(config.mongoUrl);
-    consola.info("Connected to MongoDB");
+    consola2.info("Connected to MongoDB");
   } catch (error) {
-    console.error(error);
+    consola2.error("Failed to connect to MongoDB");
+    consola2.error(error);
     process.exit(1);
   }
 };
@@ -219,9 +336,9 @@ try {
   const port = config.port;
   await connectToMongoDatabase();
   app_default.listen(port, () => {
-    consola2.info(`Server is running at http://localhost:${port}`);
+    consola3.info(`Server is running at http://localhost:${port}`);
   });
 } catch (err) {
-  consola2.error(err.message);
+  consola3.error(err.message);
   process.exit(1);
 }
