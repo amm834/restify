@@ -6,6 +6,7 @@ import passport from "passport";
 import {jwtStrategy} from "./middlewares/jwt.middleware";
 import cors from "cors";
 import createHttpError, {HttpError} from "http-errors";
+import consola from "consola";
 
 
 const app: Express = express();
@@ -25,10 +26,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next(createHttpError(404, "Not found"));
 });
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((error: Error, req: Request, res: Response) => {
     if (error instanceof HttpError) {
         return res.status(error.status).json({msg: error.message});
     }
+
+    consola.error(error);
     return res.status(500).json({msg: "Something went wrong", error});
 });
 
