@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import consola from "consola";
-import {config} from "../../config";
+import {config} from "../config";
 
 
 export const connectToMongoDatabase = async () => {

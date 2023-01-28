@@ -3,11 +3,11 @@ import {findUserByEmail, User} from "../models/user.model";
 import createHttpError from "http-errors";
 import {comparePassword} from "../utils/bcrypt.util";
 import jwt from 'jsonwebtoken'
+import {createUser} from "../services/user.service";
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
-    const {name, email, password} = req.body;
     try {
-        const user = await User.create({name, email, password});
+        const user = await createUser(req.body);
         await res.status(201).json(user);
     } catch (error) {
         next(error);

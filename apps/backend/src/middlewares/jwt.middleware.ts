@@ -1,12 +1,12 @@
 import {ExtractJwt, Strategy} from "passport-jwt";
-import {findUserByEmail} from "../models/user.model";
-import {config} from "../../config";
+import {config} from "../config";
+import {findUserByEmail} from "../services/user.service";
 
-
-export const jwtStrategy = new Strategy({
+const opts = {
     secretOrKey: config.jwtSecret,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-}, async function (payload, done) {
+}
+export const jwtStrategy = new Strategy(opts, async function (payload, done) {
     try {
         const user = await findUserByEmail(payload.email)
         done(null, user)

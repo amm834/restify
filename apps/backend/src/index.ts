@@ -1,11 +1,10 @@
 import consola from "consola";
 import app from "./app";
-import {connectToMongoDatabase} from "./utils/connectToMongoDatabase";
-import {config} from "../config";
+import {connectToMongoDatabase} from "./utils/connect.util";
+import {config} from "./config";
 
 try {
     const port = config.port;
-
 
     await connectToMongoDatabase();
 
