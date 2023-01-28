@@ -8,7 +8,7 @@ export const validate = (schema: AnyZodObject) => async (req: Request, res: Resp
             query: req.query,
             params: req.params
         });
-        next()
+        return next()
     } catch (error) {
         return res.status(422).json(error);
     }
