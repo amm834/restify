@@ -1,16 +1,16 @@
 import {NextFunction, Request, Response} from "express";
 import {createSession} from "../services/session.service";
-import {validatePassword} from "../services/user.service";
+import {findUserByEmail, validatePassword} from "../services/user.service";
 import {signJwt} from "../utils/jwt.util";
 import {config} from "../config";
 
 export const createUserSession = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {userId, email, password} = req.body;
+        const {email, password} = req.body;
 
         const user = await validatePassword(email, password);
 
-        const session = await createSession(userId, req.get("user-agent") ?? "");
+        const session = await createSession(user._id, req.get("user-agent") ?? "");
 
         const {accessTokenTimeToLive, refreshTokenTimeToLive} = config
 

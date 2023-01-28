@@ -17,10 +17,10 @@ export const createUser = async (user: DocumentDefinition<Omit<IUser, "createdAt
 
 
 export const findUserByEmail = async (email: string) => {
-    return User.findOne({email});
+    return User.findOne({email}).select("+password").lean();
 }
 
-export const validatePassword = async (email: string, password: string) => {
+export const validatePassword = async (email: string, password: string): Promise<DocumentDefinition<IUser>> => {
     const user = await findUserByEmail(email);
 
     if (!user) {

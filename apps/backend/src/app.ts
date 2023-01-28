@@ -6,7 +6,6 @@ import passport from "passport";
 import {jwtStrategy} from "./middlewares/jwt.middleware";
 import cors from "cors";
 import createHttpError, {isHttpError} from "http-errors";
-import consola from "consola";
 import {sessionRouter} from "./routes/session.routes";
 
 
@@ -30,7 +29,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const status = isHttpError(error) ? error.status : 500;
-    const errorResponse = isHttpError(error) ? {msg: error.message,} : {msg: "Internal server error",};
+
+    const errorResponse = isHttpError(error) ? {msg: error.message,} : {msg: "Internal server error"};
 
     res.status(status).json(errorResponse);
 })

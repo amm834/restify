@@ -55,7 +55,7 @@ var createUser = async (user2) => {
   return await User.create(user2);
 };
 var findUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findOne({ email }).select("+password").lean();
 };
 var validatePassword = async (email, password) => {
   const user2 = await findUserByEmail(email);
@@ -232,11 +232,15 @@ import { Router as Router2 } from "express";
 // src/schemas/session.schema.ts
 import { object as object2, string as string2 } from "zod";
 var sessionSchema = object2({
-  email: string2({
-    required_error: "Email is required"
-  }).email("Invalid email address"),
-  password: string2({
-    required_error: "Password is required"
+  body: object2({
+    email: string2({
+      required_error: "Email is required"
+    }).email("Email is invalid"),
+    password: string2({
+      required_error: "Password is required"
+    }).min(6, {
+      message: "Password must be at least 6 characters"
+    })
   })
 });
 
@@ -281,9 +285,9 @@ var signJwt = (payload, options) => {
 // src/controllers/session.controller.ts
 var createUserSession = async (req, res, next) => {
   try {
-    const { userId, email, password } = req.body;
+    const { email, password } = req.body;
     const user2 = await validatePassword(email, password);
-    const session = await createSession(userId, req.get("user-agent") ?? "");
+    const session = await createSession(user2._id, req.get("user-agent") ?? "");
     const { accessTokenTimeToLive, refreshTokenTimeToLive } = config;
     const accessToken = signJwt({ ...user2, session: session._id }, { expiresIn: accessTokenTimeToLive });
     const refreshToken = signJwt({ user: user2, session }, { expiresIn: refreshTokenTimeToLive });
