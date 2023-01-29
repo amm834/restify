@@ -11,9 +11,11 @@ export const signJwt = (payload: Object, options?: jwt.SignOptions) => {
     })
 }
 
-export const verifyJwt = (token: string, options: any) => {
+export const verifyJwt = (token: string) => {
     try {
-        const decoded = jwt.verify(token, publicKey, options)
+        const decoded = jwt.verify(token, publicKey, {
+            algorithms: ['RS256'],
+        })
         return {
             decoded,
             valid: true,

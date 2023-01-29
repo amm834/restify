@@ -25,7 +25,7 @@ export async function reIssueAccessToken({
                                          }: {
     refreshToken: string;
 }) {
-    const {decoded} = verifyJwt(refreshToken, "refreshTokenPublicKey");
+    const {decoded} = verifyJwt(refreshToken);
 
     if (!decoded || !lodash.get(decoded, "session")) return false;
 

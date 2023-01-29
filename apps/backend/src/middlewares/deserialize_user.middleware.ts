@@ -15,12 +15,14 @@ export const deserializeUser = async (req: Request, res: Response, next: NextFun
         return next();
     }
 
-    const {decoded, expired} = verifyJwt(accessToken, "accessTokenPublicKey");
+    const {decoded, expired} = verifyJwt(accessToken);
+
 
     if (decoded) {
         res.locals.user = decoded;
         return next();
     }
+
 
     if (expired && refreshToken) {
         const newAccessToken = await reIssueAccessToken({refreshToken});
@@ -29,7 +31,8 @@ export const deserializeUser = async (req: Request, res: Response, next: NextFun
             res.setHeader("x-access-token", newAccessToken);
         }
 
-        const result = verifyJwt(newAccessToken as string, "accessTokenPublicKey");
+        const result = verifyJwt(newAccessToken as string);
+
 
         res.locals.user = result.decoded;
         return next();

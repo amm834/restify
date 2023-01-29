@@ -129,10 +129,45 @@ var userRouter = Router();
 userRouter.post("/register", validate(createUserSchema), register);
 
 // src/app.ts
-import passport from "passport";
+import cors from "cors";
+import createHttpError2, { isHttpError } from "http-errors";
 
-// src/middlewares/jwt.middleware.ts
-import { ExtractJwt, Strategy } from "passport-jwt";
+// src/routes/session.routes.ts
+import { Router as Router2 } from "express";
+
+// src/schemas/session.schema.ts
+import { object as object2, string as string2 } from "zod";
+var sessionSchema = object2({
+  body: object2({
+    email: string2({
+      required_error: "Email is required"
+    }).email("Email is invalid"),
+    password: string2({
+      required_error: "Password is required"
+    }).min(6, {
+      message: "Password must be at least 6 characters"
+    })
+  })
+});
+
+// src/models/session.model.ts
+import { model as model2, Schema as Schema2 } from "mongoose";
+var sessionModelSchema = new Schema2({
+  user: {
+    type: Schema2.Types.ObjectId,
+    ref: "User"
+  },
+  isValid: {
+    type: Boolean,
+    default: true
+  },
+  userAgent: {
+    type: String
+  }
+}, {
+  timestamps: true
+});
+var Session = model2("Session", sessionModelSchema);
 
 // src/config/index.ts
 var config = {
@@ -211,61 +246,6 @@ rq6XbdlpTeju+6BeRbpA36XVYVMEqSSJhq9niNDKvlqD7J2MGjYSjSiBgII=
 `
 };
 
-// src/middlewares/jwt.middleware.ts
-var opts = {
-  secretOrKey: config.jwtSecret,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-};
-var jwtStrategy = new Strategy(opts, async function(payload, done) {
-  try {
-    const user2 = await findUserByEmail(payload.email);
-    done(null, user2);
-  } catch (error) {
-    done(error, false);
-  }
-});
-
-// src/app.ts
-import cors from "cors";
-import createHttpError2, { isHttpError } from "http-errors";
-
-// src/routes/session.routes.ts
-import { Router as Router2 } from "express";
-
-// src/schemas/session.schema.ts
-import { object as object2, string as string2 } from "zod";
-var sessionSchema = object2({
-  body: object2({
-    email: string2({
-      required_error: "Email is required"
-    }).email("Email is invalid"),
-    password: string2({
-      required_error: "Password is required"
-    }).min(6, {
-      message: "Password must be at least 6 characters"
-    })
-  })
-});
-
-// src/models/session.model.ts
-import { model as model2, Schema as Schema2 } from "mongoose";
-var sessionModelSchema = new Schema2({
-  user: {
-    type: Schema2.Types.ObjectId,
-    ref: "User"
-  },
-  isValid: {
-    type: Boolean,
-    default: true
-  },
-  userAgent: {
-    type: String
-  }
-}, {
-  timestamps: true
-});
-var Session = model2("Session", sessionModelSchema);
-
 // src/utils/jwt.util.ts
 import jwt from "jsonwebtoken";
 var publicKey = config.publicKey;
@@ -276,9 +256,11 @@ var signJwt = (payload, options) => {
     ...options && options
   });
 };
-var verifyJwt = (token, options) => {
+var verifyJwt = (token) => {
   try {
-    const decoded = jwt.verify(token, publicKey, options);
+    const decoded = jwt.verify(token, publicKey, {
+      algorithms: ["RS256"]
+    });
     return {
       decoded,
       valid: true,
@@ -310,7 +292,7 @@ var updateSession = async (query, update) => {
 async function reIssueAccessToken({
   refreshToken
 }) {
-  const { decoded } = verifyJwt(refreshToken, "refreshTokenPublicKey");
+  const { decoded } = verifyJwt(refreshToken);
   if (!decoded || !lodash2.get(decoded, "session"))
     return false;
   const session = await Session.findById(lodash2.get(decoded, "session"));
@@ -381,7 +363,7 @@ var deserializeUser = async (req, res, next) => {
   if (!accessToken) {
     return next();
   }
-  const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
+  const { decoded, expired } = verifyJwt(accessToken);
   if (decoded) {
     res.locals.user = decoded;
     return next();
@@ -391,12 +373,30 @@ var deserializeUser = async (req, res, next) => {
     if (newAccessToken) {
       res.setHeader("x-access-token", newAccessToken);
     }
-    const result = verifyJwt(newAccessToken, "accessTokenPublicKey");
+    const result = verifyJwt(newAccessToken);
     res.locals.user = result.decoded;
     return next();
   }
   return next();
 };
+
+// src/routes/product.routes.ts
+import { Router as Router3 } from "express";
+
+// src/controllers/products.controller.ts
+var createProduct = async (req, res, next) => {
+  const userId = res.locals.user["0"]._id;
+};
+var getProductById = async (req, res, next) => {
+};
+var updateProductById = async (req, res, next) => {
+};
+var deleteProductById = async (req, res, next) => {
+};
+
+// src/routes/product.routes.ts
+var productRouter = Router3();
+productRouter.post("/", requiredUser, createProduct).get("/:productId", requiredUser, getProductById).put("/:productId", requiredUser, updateProductById).delete("/:productId", requiredUser, deleteProductById);
 
 // src/app.ts
 var app = express();
@@ -404,10 +404,10 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
-passport.use(jwtStrategy);
 app.use(deserializeUser);
 app.use("/api/users", userRouter);
 app.use("/api/sessions", sessionRouter);
+app.use("/api/products", productRouter);
 app.use((req, res, next) => {
   next(createHttpError2(404, "Not found"));
 });

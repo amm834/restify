@@ -28,9 +28,7 @@ export const createUserSession = async (req: Request<{}, {}, SessionSchema["body
 export const getUserSessions = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = res.locals.user._id;
-
         const sessions = await findSessions({user: userId, valid: true});
-
         return res.send(sessions);
     } catch (error) {
         next(error);
