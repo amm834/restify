@@ -130,7 +130,7 @@ userRouter.post("/register", validate(createUserSchema), register);
 
 // src/app.ts
 import cors from "cors";
-import createHttpError2, { isHttpError } from "http-errors";
+import createHttpError3, { isHttpError } from "http-errors";
 
 // src/routes/session.routes.ts
 import { Router as Router2 } from "express";
@@ -250,8 +250,8 @@ rq6XbdlpTeju+6BeRbpA36XVYVMEqSSJhq9niNDKvlqD7J2MGjYSjSiBgII=
 import jwt from "jsonwebtoken";
 var publicKey = config.publicKey;
 var privateKey = config.privateKey;
-var signJwt = (payload, options) => {
-  return jwt.sign(payload, privateKey, {
+var signJwt = (payload2, options) => {
+  return jwt.sign(payload2, privateKey, {
     algorithm: "RS256",
     ...options && options
   });
@@ -383,20 +383,136 @@ var deserializeUser = async (req, res, next) => {
 // src/routes/product.routes.ts
 import { Router as Router3 } from "express";
 
+// src/models/product.model.ts
+import { model as model3, Schema as Schema3 } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+var productSchema = new Schema3({
+  uuid: { type: String, default: uuidv4() },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  image: { type: String, required: true },
+  user: { type: Schema3.Types.ObjectId, ref: "User", required: true }
+}, {
+  timestamps: true
+});
+var Product = model3("Product", productSchema);
+
+// src/services/product.service.ts
+var createProduct = async (product) => {
+  return await Product.create(product);
+};
+var findProduct = async (query) => {
+  return Product.findOne(query).lean();
+};
+var findAndUpdateProduct = async (query, update, options) => Product.findOneAndUpdate(query, update, options);
+var deleteProduct = async (query) => {
+  await Product.deleteOne(query);
+};
+
 // src/controllers/products.controller.ts
-var createProduct = async (req, res, next) => {
-  const userId = res.locals.user["0"]._id;
+import createHttpError2 from "http-errors";
+var createProductHandler = async (req, res, next) => {
+  try {
+    const userId = res.locals.user["0"]._id;
+    const { title, description, price, image } = req.body;
+    const product = await createProduct({ title, description, price, image, user: userId });
+    return res.status(201).json(product);
+  } catch (e) {
+    next(e);
+  }
 };
 var getProductById = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const product = await findProduct({ productId });
+    if (!product) {
+      throw createHttpError2(404, "Product not found");
+    }
+    return res.status(200).json(product);
+  } catch (e) {
+    next(e);
+  }
 };
 var updateProductById = async (req, res, next) => {
+  try {
+    const userId = res.locals.user["0"]._id;
+    const { title, description, price, image } = req.body;
+    const { productId } = req.params;
+    const product = await findAndUpdateProduct({ productId }, {
+      title,
+      description,
+      price,
+      image,
+      user: userId
+    }, { new: true });
+    return res.status(200).json(product);
+  } catch (e) {
+    next(e);
+  }
 };
 var deleteProductById = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const userId = res.locals.user["0"]._id;
+    const product = await findProduct({ productId });
+    if (!product) {
+      throw createHttpError2(404, "Product not found");
+    }
+    if (product.user.toString() !== userId.toString()) {
+      throw createHttpError2(401, "Unauthorized");
+    }
+    await deleteProduct({ productId });
+    res.status(304).json({ msg: "Product deleted" });
+  } catch (e) {
+    next(e);
+  }
 };
+
+// src/schemas/product.schema.ts
+import { number, object as object3, string as string3 } from "zod";
+var payload = {
+  body: object3({
+    title: string3({
+      required_error: "Title is required"
+    }),
+    description: string3({
+      required_error: "Description is required"
+    }).min(120, {
+      message: "Description must be at least 120 characters"
+    }),
+    price: number({
+      required_error: "Price is required"
+    }),
+    image: string3({
+      required_error: "Image is required"
+    })
+  })
+};
+var params = {
+  params: object3({
+    productId: string3({
+      required_error: "Product id is required"
+    })
+  })
+};
+var createProductSchema = object3({
+  ...payload
+});
+var updateProductSchema = object3({
+  ...params,
+  ...payload
+});
+var deleteProductSchema = object3({
+  ...params
+});
+var getProductSchema = object3({
+  ...params
+});
 
 // src/routes/product.routes.ts
 var productRouter = Router3();
-productRouter.post("/", requiredUser, createProduct).get("/:productId", requiredUser, getProductById).put("/:productId", requiredUser, updateProductById).delete("/:productId", requiredUser, deleteProductById);
+productRouter.post("/", [requiredUser, validate(createProductSchema)], createProductHandler).get("/:productId", [validate(getProductSchema)], getProductById).put("/:productId", [requiredUser, validate(updateProductSchema)], updateProductById).delete("/:productId", [requiredUser, validate(deleteProductSchema)], deleteProductById);
 
 // src/app.ts
 var app = express();
@@ -409,7 +525,7 @@ app.use("/api/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 app.use((req, res, next) => {
-  next(createHttpError2(404, "Not found"));
+  next(createHttpError3(404, "Not found"));
 });
 app.use((error, req, res, next) => {
   const status = isHttpError(error) ? error.status : 500;

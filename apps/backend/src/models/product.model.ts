@@ -1,5 +1,5 @@
 import {IUser} from "./user.model";
-import {model, Schema} from "mongoose";
+import {model, Schema, Document} from "mongoose";
 import {v4 as uuidv4} from 'uuid';
 
 export interface IProduct extends Document {
@@ -8,7 +8,7 @@ export interface IProduct extends Document {
     description: string;
     price: number;
     image: string;
-    user: IUser;
+    user: IUser["_id"];
     createdAt: Date;
     updatedAt: Date;
 }
