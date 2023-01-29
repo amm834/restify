@@ -69,6 +69,9 @@ var validatePassword = async (email, password) => {
   }
   return user2;
 };
+var findUser = async (query) => {
+  return User.find(query).lean();
+};
 
 // src/controllers/user.controller.ts
 import lodash from "lodash";
@@ -263,14 +266,6 @@ var sessionModelSchema = new Schema2({
 });
 var Session = model2("Session", sessionModelSchema);
 
-// src/services/session.service.ts
-var createSession = async (userId, userAgent) => {
-  return await Session.create({
-    user: userId,
-    userAgent
-  });
-};
-
 // src/utils/jwt.util.ts
 import jwt from "jsonwebtoken";
 var publicKey = config.publicKey;
@@ -281,6 +276,54 @@ var signJwt = (payload, options) => {
     ...options && options
   });
 };
+var verifyJwt = (token, options) => {
+  try {
+    const decoded = jwt.verify(token, publicKey, options);
+    return {
+      decoded,
+      valid: true,
+      expired: false
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      decoded: null,
+      expired: error.message === "jwt expired"
+    };
+  }
+};
+
+// src/services/session.service.ts
+import lodash2 from "lodash";
+var createSession = async (userId, userAgent) => {
+  return await Session.create({
+    user: userId,
+    userAgent
+  });
+};
+var findSessions = async (query) => {
+  return Session.find(query).lean();
+};
+var updateSession = async (query, update) => {
+  return Session.updateOne(query, update).lean();
+};
+async function reIssueAccessToken({
+  refreshToken
+}) {
+  const { decoded } = verifyJwt(refreshToken, "refreshTokenPublicKey");
+  if (!decoded || !lodash2.get(decoded, "session"))
+    return false;
+  const session = await Session.findById(lodash2.get(decoded, "session"));
+  if (!session || !session.isValid)
+    return false;
+  const user2 = await findUser({ _id: session.user });
+  if (!user2)
+    return false;
+  return signJwt(
+    { ...user2, session: session._id },
+    { expiresIn: config.accessTokenTimeToLive }
+  );
+}
 
 // src/controllers/session.controller.ts
 var createUserSession = async (req, res, next) => {
@@ -296,10 +339,64 @@ var createUserSession = async (req, res, next) => {
     next(error);
   }
 };
+var getUserSessions = async (req, res, next) => {
+  try {
+    const userId = res.locals.user._id;
+    const sessions = await findSessions({ user: userId, valid: true });
+    return res.send(sessions);
+  } catch (error) {
+    next(error);
+  }
+};
+async function deleteSessionHandler(req, res) {
+  const sessionId = res.locals.user.session;
+  await updateSession({ _id: sessionId }, { valid: false });
+  return res.send({
+    accessToken: null,
+    refreshToken: null
+  });
+}
+
+// src/middlewares/required_user.middleware.ts
+var requiredUser = (req, res, next) => {
+  const user2 = res.locals.user;
+  if (!user2) {
+    return res.sendStatus(403);
+  }
+  return next();
+};
 
 // src/routes/session.routes.ts
 var sessionRouter = Router2();
-sessionRouter.post("/", validate(sessionSchema), createUserSession);
+sessionRouter.post("/", validate(sessionSchema), createUserSession).get("/", requiredUser, getUserSessions).delete("/sessions", requiredUser, deleteSessionHandler);
+
+// src/middlewares/deserialize_user.middleware.ts
+import lodash3 from "lodash";
+var deserializeUser = async (req, res, next) => {
+  const accessToken = lodash3.get(req, "headers.authorization", "").replace(
+    /^Bearer\s/,
+    ""
+  );
+  const refreshToken = lodash3.get(req, "headers.x-refresh");
+  if (!accessToken) {
+    return next();
+  }
+  const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
+  if (decoded) {
+    res.locals.user = decoded;
+    return next();
+  }
+  if (expired && refreshToken) {
+    const newAccessToken = await reIssueAccessToken({ refreshToken });
+    if (newAccessToken) {
+      res.setHeader("x-access-token", newAccessToken);
+    }
+    const result = verifyJwt(newAccessToken, "accessTokenPublicKey");
+    res.locals.user = result.decoded;
+    return next();
+  }
+  return next();
+};
 
 // src/app.ts
 var app = express();
@@ -308,6 +405,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 passport.use(jwtStrategy);
+app.use(deserializeUser);
 app.use("/api/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 app.use((req, res, next) => {

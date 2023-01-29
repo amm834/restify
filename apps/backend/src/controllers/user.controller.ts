@@ -20,5 +20,3 @@ export const register = async (
         next(error);
     }
 };
-;
-

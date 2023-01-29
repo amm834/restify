@@ -7,6 +7,7 @@ import {jwtStrategy} from "./middlewares/jwt.middleware";
 import cors from "cors";
 import createHttpError, {isHttpError} from "http-errors";
 import {sessionRouter} from "./routes/session.routes";
+import {deserializeUser} from "./middlewares/deserialize_user.middleware";
 
 
 const app: Express = express();
@@ -18,6 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // jwt
 passport.use(jwtStrategy);
+
+app.use(deserializeUser);
 
 // routes
 app.use("/api/users", userRouter);

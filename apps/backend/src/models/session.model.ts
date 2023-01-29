@@ -2,7 +2,7 @@ import {Document, model, Schema} from "mongoose";
 import {comparePassword, hashPassword} from "../utils/bcrypt.util";
 import {IUser} from "./user.model";
 
-export interface SessionDocument extends Document {
+export interface ISession extends Document {
     user: IUser['_id'];
     isValid: boolean;
     userAgent: string;
@@ -10,7 +10,7 @@ export interface SessionDocument extends Document {
     updatedAt: Date;
 }
 
-const sessionModelSchema = new Schema<SessionDocument>({
+const sessionModelSchema = new Schema<ISession>({
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",

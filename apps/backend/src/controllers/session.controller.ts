@@ -1,10 +1,11 @@
 import {NextFunction, Request, Response} from "express";
-import {createSession} from "../services/session.service";
+import {createSession, findSessions, updateSession} from "../services/session.service";
 import {findUserByEmail, validatePassword} from "../services/user.service";
 import {signJwt} from "../utils/jwt.util";
 import {config} from "../config";
+import {SessionSchema} from "../schemas/session.schema";
 
-export const createUserSession = async (req: Request, res: Response, next: NextFunction) => {
+export const createUserSession = async (req: Request<{}, {}, SessionSchema["body"]>, res: Response, next: NextFunction) => {
     try {
         const {email, password} = req.body;
 
@@ -22,4 +23,28 @@ export const createUserSession = async (req: Request, res: Response, next: NextF
     } catch (error) {
         next(error);
     }
+}
+
+export const getUserSessions = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = res.locals.user._id;
+
+        const sessions = await findSessions({user: userId, valid: true});
+
+        return res.send(sessions);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+export async function deleteSessionHandler(req: Request, res: Response) {
+    const sessionId = res.locals.user.session;
+
+    await updateSession({_id: sessionId}, {valid: false});
+
+    return res.send({
+        accessToken: null,
+        refreshToken: null,
+    });
 }
