@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="feat: add zod validation schema for product">
+    <list default="true" id="066bb98b-e50d-4ef0-be29-dac0f4a23323" name="Changes" comment="feat: add product crud">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/controllers/products.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/controllers/products.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/models/product.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/models/product.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/routes/product.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/routes/product.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/src/services/jwt.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/services/product.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +91,7 @@
       <workItem from="1674878703715" duration="4743000" />
       <workItem from="1674885937191" duration="3844000" />
       <workItem from="1674910574462" duration="13347000" />
-      <workItem from="1674979242358" duration="7871000" />
+      <workItem from="1674979242358" duration="8769000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add note list view">
       <created>1674547507425</created>
@@ -237,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674985052850</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="feat: add product crud">
+      <created>1674987394892</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1674987394892</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +281,7 @@
     <MESSAGE value="feat: add refresh token functionality" />
     <MESSAGE value="feat: add user model schema" />
     <MESSAGE value="feat: add zod validation schema for product" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add zod validation schema for product" />
+    <MESSAGE value="feat: add product crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add product crud" />
   </component>
 </project>
