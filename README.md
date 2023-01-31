@@ -1,49 +1,65 @@
 # Restify
 
-This is a start kit for building JWT based REST API with Node.js, Express and MongoDB.
+This is a start kit for building JWT based REST API with Node.js, Express and MongoDB which includes user authentication and session based authentication for web apps.
 
 ## Features
 
-- JWT Authentication
-- User Authentication
-- Production ready
+- JWT Authentication (API)
+- Session Authentication (Web)
+- User Authentication (Full Stack)
 
 ## Tech Stack
 
-- [Mono Repo](https://trubo.build)
-- [Node.js](https://nodejs.org)
-- [Express](https://expressjs.com)
-- [MongoDB](https://mongodb.com)
-- [Mongoose](https://mongoosejs.com)
 - [JWT](https://jwt.io)
-- [Bcrypt](https://www.npmjs.com/package/bcrypt)
-- [Helmet](https://helmetjs.github.io)
+- [Next](https://nextjs.org)
+- [Node.js](https://nodejs.org)
+- [MongoDB](https://mongodb.com)
+- [SWR](https://swr.vercel.app)
+- [Express](https://expressjs.com)
+- [Mono Repo](https://trubo.build)
+- [Mongoose](https://mongoosejs.com)
 - [ESbuild](https://esbuild.github.io)
+- [Helmet](https://helmetjs.github.io)
 - [Zod](https://www.npmjs.com/package/zod)
+- [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [React Hook Form](https://react-hook-form.com)
 - [Consola](https://www.npmjs.com/package/consola)
+- [Axios](https://www.npmjs.com/package/axios)
+- [Cookie Parser](https://www.npmjs.com/package/cookie-parser)
 
 ## Architecture
 
-- Mono Repo
 - MVC
+- REST
+- Mono Repo
 
 ## Directory Structure
 
 ```
 .
 ├── apps
-│   └── backend                 # backend app
-│       └── src     
-│           ├── config          # config files
-│           ├── controllers     # express controllers
-│           ├── middlewares     # express middlewares
-│           ├── models          # mongoose models
-│           ├── routes          # routes
-│           ├── schemas         # validation schemas
-│           ├── services        # business logic (i.e think as service pattern)
-│           └── utils           # utility functions
+│   ├── backend
+│   │   └── src
+│   │       ├── config
+│   │       ├── controllers
+│   │       ├── middlewares
+│   │       ├── models
+│   │       ├── routes
+│   │       ├── schemas
+│   │       ├── services
+│   │       └── utils
+│   └── client
+│       ├── app
+│       │   ├── auth
+│       │   │   ├── login
+│       │   │   └── register
+│       │   ├── hooks
+│       │   └── utils
+│       ├── pages
+│       │   └── api
+│       └── public
 └── packages
-    └── tsconfig                      # tsconfig package
+    └── tsconfig
 ```
 
 ## Installation
