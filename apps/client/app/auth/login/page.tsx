@@ -1,7 +1,13 @@
 'use client'
+import { axiosInstance } from "@/app/utils/axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { object, string, TypeOf, ZodEffects, ZodObject, ZodString, ZodTypeAny } from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
+import { object, string, TypeOf } from 'zod';
+import { useRouter } from 'next/navigation';
+
+
 
 
 export const createUserSchema = object({
@@ -29,15 +35,24 @@ export const createUserSchema = object({
 type CreateUser = TypeOf<typeof createUserSchema>;
 
 export default function LoginPage() {
+    const router = useRouter();
+
     const { register, formState: { errors }, handleSubmit } = useForm<CreateUser>({
         resolver: zodResolver(createUserSchema),
     })
+    const [registerErrors, setRegisterErrors] = useState<string | null>(null)
 
-    const onSubmit = (data: CreateUser) => {
-        console.log(data);
+
+    const onSubmit = async (data: CreateUser) => {
+        try {
+            await axiosInstance.post('/auth/register', data)
+            await router.push('/')
+        } catch (err) {
+            const error = err as AxiosError<Error>
+            setRegisterErrors(error.message);
+        }
     }
 
-    console.log(errors)
 
     return (
         <div className="flex items-center justify-center min-h-screen px-10 bg-gray-100">
@@ -45,6 +60,9 @@ export default function LoginPage() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full max-w-sm p-8 rounded-lg shadow-lg bg-gray-50 dark:bg-gray-800"
             >
+                <p>
+                    {registerErrors}
+                </p>
                 <h1 className="mb-5 text-2xl font-bold text-gray-800">Login</h1>
                 {/*  name */}
                 <div className="mb-4">
