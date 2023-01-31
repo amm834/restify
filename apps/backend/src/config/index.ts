@@ -1,12 +1,13 @@
 export const config = {
-    port: 8000,
-    mongoUrl: 'mongodb://localhost:27017/turbo-rest-api',
-    saltRounds: 10,
-    jwtExpiration: '1d',
-    jwtSecret: 'secret',
-    accessTokenTimeToLive: '15m',
-    refreshTokenTimeToLive: '7d',
-    publicKey: `-----BEGIN PUBLIC KEY-----
+  port: 8000,
+  origin: "http://localhost:8000",
+  mongoUrl: "mongodb://localhost:27017/turbo-rest-api",
+  saltRounds: 10,
+  jwtExpiration: "1d",
+  jwtSecret: "secret",
+  accessTokenTimeToLive: "15m",
+  refreshTokenTimeToLive: "7d",
+  publicKey: `-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsvOiUE9bh1cdKw7o3sbD
 g3Q/LuUxi/ONMMZJARwcG9xUKtx1Q+ld0oXJ+UXcMy1r2xU+D2UIT9r8Mt84fUjO
 CxLx3DzkD6p+jyh/3VORGlqF4xK5D/jpePKrZHi+a2eBxyLD9zx5J8BhT1Mtwpm8
@@ -20,7 +21,7 @@ AmvcPaE+U9Xt3Ot7Ot4viAVTqb3UUsH9Ts+Anb6UCZd5A4eMEJGxFgxONxgtQRvy
 j2j5+MdgWHGVc1gJ1fejv7GYVO9HL7SGkflDUd7fHIa3tRpwX2beuSQyLl2BJySc
 fdw5MQDnE7Z77RUBnRhUsHMCAwEAAQ==
 -----END PUBLIC KEY-----`,
-    privateKey: `-----BEGIN RSA PRIVATE KEY-----
+  privateKey: `-----BEGIN RSA PRIVATE KEY-----
 MIIJKAIBAAKCAgEAsvOiUE9bh1cdKw7o3sbDg3Q/LuUxi/ONMMZJARwcG9xUKtx1
 Q+ld0oXJ+UXcMy1r2xU+D2UIT9r8Mt84fUjOCxLx3DzkD6p+jyh/3VORGlqF4xK5
 D/jpePKrZHi+a2eBxyLD9zx5J8BhT1Mtwpm8bzQvRHJI3ecf53RwjpowfBRMcHn5
@@ -72,4 +73,4 @@ sfTP7nx2BQM8ZZZ0iS1pb1Fbb7xCb1f838o6UIFdYVkgi+OEXCrhR716nv3W0e18
 rq6XbdlpTeju+6BeRbpA36XVYVMEqSSJhq9niNDKvlqD7J2MGjYSjSiBgII=
 -----END RSA PRIVATE KEY-----
 `,
-}
+};

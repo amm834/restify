@@ -7,16 +7,19 @@ import createHttpError, { isHttpError } from "http-errors";
 import { sessionRouter } from "./routes/session.routes";
 import { deserializeUser } from "./middlewares/deserialize_user.middleware";
 import { productRouter } from "./routes/product.routes";
+import { config } from "./config";
+import cookieParser from "cookie-parser";
 
 const app: Express = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: config.origin,
     credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
