@@ -1,12 +1,8 @@
 'use client'
 import { useForm } from "react-hook-form";
-import { object, string, ZodEffects, ZodObject, ZodString, ZodTypeAny } from 'zod'
+import { object, string, TypeOf, ZodEffects, ZodObject, ZodString, ZodTypeAny } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 
-interface IFormInputs {
-    email: string;
-    password: string;
-}
 
 export const createUserSchema = object({
     name: string().min(1, {
@@ -30,13 +26,14 @@ export const createUserSchema = object({
     path: ["passwordConfirmation"],
 });
 
+type CreateUser = TypeOf<typeof createUserSchema>;
 
 export default function LoginPage() {
-    const { register, formState: { errors }, handleSubmit } = useForm({
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateUser>({
         resolver: zodResolver(createUserSchema),
     })
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: CreateUser) => {
         console.log(data);
     }
 
@@ -58,7 +55,7 @@ export default function LoginPage() {
                         {...register('name')}
                     />
                     <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                        {errors.name && errors.name.message as any}
+                        {errors.name && errors.name.message}
                     </p>
                 </div>
 
@@ -71,7 +68,7 @@ export default function LoginPage() {
                         {...register('email')}
                     />
                     <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                        {errors.email && errors.email.message as any}
+                        {errors.email && errors.email.message}
                     </p>
                 </div>
 
@@ -84,7 +81,7 @@ export default function LoginPage() {
                         {...register('password')}
                     />
                     <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                        {errors.password && errors.password.message as any}
+                        {errors.password && errors.password.message}
                     </p>
                 </div>
 
@@ -98,7 +95,7 @@ export default function LoginPage() {
                         {...register('passwordConfirmation')}
                     />
                     <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                        {errors.passwordConfirmation && errors.passwordConfirmation.message as any}
+                        {errors.passwordConfirmation && errors.passwordConfirmation.message}
                     </p>
                 </div>
 
