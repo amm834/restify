@@ -69,7 +69,7 @@ export default function RegisterPage() {
                 method="POST"
             >
                 <ToastContainer />
-                <h1 className="mb-5 text-2xl font-bold text-gray-800">Login</h1>
+                <h1 className="mb-5 text-2xl font-bold text-gray-800">Register</h1>
                 {/*  name */}
                 <div className="mb-4">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>

@@ -1,6 +1,6 @@
 export const config = {
   port: 8000,
-  origin: "http://localhost:8000",
+  origin: "http://localhost:3000",
   mongoUrl: "mongodb://localhost:27017/turbo-rest-api",
   saltRounds: 10,
   jwtExpiration: "1d",
