@@ -1,13 +1,12 @@
 # Restify
 
-This is start kit for building JWT based RESTful API with Node.js, Express and MongoDB.
+This is a start kit for building JWT based REST API with Node.js, Express and MongoDB.
 
 ## Features
 
 - JWT Authentication
 - User Authentication
 - Production ready
-
 
 ## Tech Stack
 
@@ -41,7 +40,7 @@ This is start kit for building JWT based RESTful API with Node.js, Express and M
 │           ├── models          # mongoose models
 │           ├── routes          # routes
 │           ├── schemas         # validation schemas
-│           ├── services        # business logic
+│           ├── services        # business logic (i.e think as service pattern)
 │           └── utils           # utility functions
 └── packages
     └── tsconfig                      # tsconfig package
