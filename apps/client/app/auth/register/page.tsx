@@ -7,6 +7,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { object, string, TypeOf } from 'zod';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 export const createUserSchema = object({
@@ -41,27 +45,30 @@ export default function RegisterPage() {
     })
     const [registerErrors, setRegisterErrors] = useState<string | null>(null)
 
+    const notify = (error: string) => toast(error, {
+        type: "error",
+    });
+
 
     const onSubmit = async (data: CreateUser) => {
         try {
-            await axiosInstance.post('/auth/register', data)
-            await router.push('/')
+            await axiosInstance.post('/api/users/register', data)
+            // await router.push('/')
         } catch (err) {
-            const error = err as AxiosError<Error>
-            setRegisterErrors(error.message);
+            const error = err as AxiosError<{ msg: string }>;
+            setRegisterErrors(error.response?.data?.msg as string);
+            notify(error.response?.data?.msg as string)
         }
     }
-
 
     return (
         <div className="flex items-center justify-center min-h-screen px-10 bg-gray-100">
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full max-w-sm p-8 rounded-lg shadow-lg bg-gray-50 dark:bg-gray-800"
+                method="POST"
             >
-                <p>
-                    {registerErrors}
-                </p>
+                <ToastContainer />
                 <h1 className="mb-5 text-2xl font-bold text-gray-800">Login</h1>
                 {/*  name */}
                 <div className="mb-4">
