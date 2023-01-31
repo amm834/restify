@@ -45,7 +45,7 @@ export default function RegisterPage() {
     })
     const [registerErrors, setRegisterErrors] = useState<string | null>(null)
 
-    const notify = (error: string) => toast(error, {
+    const notify = (error = '') => toast(error, {
         type: "error",
     });
 
@@ -53,7 +53,7 @@ export default function RegisterPage() {
     const onSubmit = async (data: CreateUser) => {
         try {
             await axiosInstance.post('/api/users/register', data)
-            // await router.push('/')
+            await router.push('/')
         } catch (err) {
             const error = err as AxiosError<{ msg: string }>;
             setRegisterErrors(error.response?.data?.msg as string);
